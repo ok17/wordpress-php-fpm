@@ -11,11 +11,11 @@
 		echo 'xdebug.enable=1'; \
 		echo 'xdebug.remote_enable=1'; \
 		echo 'xdebug.remote_connect_back=0'; \
-	 echo 'xdebug.remote_autostart=1'; \
-     echo 'xdebug.idekey=PHPSTORM'; \
-     echo 'xdebug.remote_host=10.254.254.254'; \
-     echo 'xdebug.profiler_enable=0'; \
-     echo 'xdebug.remote_port=9001'; \
+    	echo 'xdebug.remote_autostart=1'; \
+        echo 'xdebug.idekey=PHPSTORM'; \
+        echo 'xdebug.remote_host=10.254.254.254'; \
+        echo 'xdebug.profiler_enable=0'; \
+        echo 'xdebug.remote_port=9001'; \
 ```
 
 --
