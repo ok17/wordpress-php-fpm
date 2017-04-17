@@ -1,0 +1,62 @@
+version: '2'
+services:
+  nginx:
+    image: nginx
+    container_name: nginx-container
+    hostname: nginx-hostname
+    volumes:
+     - ./data/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+     - ./data/nginx/proxy_params:/etc/nginx/proxy_params:ro
+     - ./data/nginx/conf.d:/etc/nginx/conf.d/:ro
+     - ./data/nginx/conf.d/global/:/etc/nginx/conf.d/global/
+    volumes_from:
+      - fpm
+    networks:
+      - my-networks
+    ports:
+      - 80:80
+    depends_on:
+      - fpm
+  fpm:
+    build: ./fpm
+    container_name: fpm-container
+    hostname: fpm-hostname
+    depends_on:
+      - db
+    expose:
+      - 9000
+    networks:
+      - my-networks
+    volumes:
+     - my-volume:/var/www/html:rw
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=user
+      - WORDPRESS_DB_PASSWORD=password
+      - WORDPRESS_DB_NAME=mydb
+      - WORDPRESS_TABLE_PREFIX=wp_
+
+  db:
+    image: mysql:latest
+    container_name: db-container
+    hostname: db-hostname
+    volumes:
+      - my-vdb:/var/lib/mysql
+      - ./db/myconf.d/:/etc/mysql/conf.d/
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=mydb
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - my-networks
+volumes:
+  my-vdb:
+  my-volume:
+    external: true
+
+networks:
+  my-networks:
+    driver: bridge
