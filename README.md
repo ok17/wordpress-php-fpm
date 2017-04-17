@@ -24,7 +24,7 @@
 
 `sudo ifconfig en0 alias 10.254.254.254 255.255.255.0`
 
-この設定はDocer for Mac でデバックをする時の設定としてわすれないように
+この設定はDocker for Mac でデバックをする時の設定としてわすれないように
 
 `xdebug.remote_connect_back=0`
 
